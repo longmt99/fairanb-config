@@ -1,0 +1,65 @@
+# Database
+#spring.datasource.url: jdbc:mysql://localhost:3306/fairanb_inventory?createDatabaseIfNotExist=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+#spring.datasource.username: root
+#spring.datasource.password: root
+#spring.datasource.driver-class-name: com.mysql.jdbc.Driver
+#spring.jpa.show-sql: true
+#spring.datasource.testWhileIdle: true
+#spring.datasource.validationQuery: SELECT 1
+#spring.jpa.database: MYSQL
+#spring.datasource.platform: mysql
+#spring.jpa.hibernate.ddl-auto: validate
+provider-name: a property file in git inventory
+
+# Redis      
+redis:
+  server: localhost
+  port: 6379
+
+#mongo db configuration.
+spring.data.mongodb.database: fairanb_inventory
+spring.data.mongodb.host: 127.0.0.1
+spring.data.mongodb.port: 27017
+
+# flyway 
+flyway:
+    baselineOnMigrate: false
+    
+# Spring Cloud
+spring:
+  cloud:
+    stream:
+      bindings:  
+        inboundMerchantChanges:
+          destination: merchantChangeTopic
+          content-type: application/json
+          group: inventoryGroup
+          
+        inboundCustomerChanges:
+          destination: customerChangeTopic
+          content-type: application/json
+          group: inventoryGroup
+          
+        binder:
+          zkNodes: localhost
+          brokers: localhost
+
+# Gateway Zuul Feign
+gateway.server: http://localhost:5555
+
+# Eureka
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+       
+#Setting logging levels
+logging:
+  level:
+    com.netflix: INFO
+    org.springframework.web: INFO
+    com.fairanb: DEBUG 

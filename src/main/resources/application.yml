@@ -1,0 +1,24 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      discovery:
+        enabled: true
+      server:
+        encrypt.enabled: false
+        git:
+          uri: https://github.com/longmt99/fairanb-config
+          searchPaths: customer, inventory, merchant, admin, notification
+          username: fairanb
+          password: Pass!234
+          default-label: master
+#Setting logging levels
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.fairanb: DEBUG
+

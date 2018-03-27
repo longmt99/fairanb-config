@@ -1,0 +1,56 @@
+# Redis      
+redis:
+  server: 54.89.241.89
+  port: 63791
+
+#mongo db configuration.
+spring.data.mongodb.database: fairanb_inventory
+spring.data.mongodb.host: 54.89.241.89
+spring.data.mongodb.port: 270171
+
+# Amazon config
+amazon:
+  s3:
+    default-bucket: ws-dev-service
+  aws:
+    access-key-id: AKIAIVQGUL***
+    access-key-secret: eiFCLw8o9HAjg*****
+    
+# Spring Cloud
+spring:
+  cloud:
+    stream:
+      bindings:
+        inboundMerchantChanges:
+          destination: merchantChangeTopic
+          content-type: application/json
+          group: inventoryGroup
+
+        inboundCustomerChanges:
+          destination: customerChangeTopic
+          content-type: application/json
+          group: inventoryGroup
+
+        binder:
+          zkNodes: kafka-server
+          brokers: kafka-server
+
+# Gateway Zuul Feign
+gateway.server: http://gateway-service:5555
+
+# Eureka
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
+
+#Setting logging levels
+logging:
+  level:
+    com.netflix: INFO
+    org.springframework.web: INFO
+    com.fairanb: DEBUG
