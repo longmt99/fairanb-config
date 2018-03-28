@@ -1,0 +1,70 @@
+version: '2'
+services:
+
+  
+  merchant:
+    image: 732597826868.dkr.ecr.us-east-1.amazonaws.com/fairanb-v2-merchant:dev.v2.0
+    container_name: merchant-service
+    mem_limit: 2000m
+    ports:
+      - 8802:8802
+    links:
+      - config-service:config-service
+      - discovery-service:discovery-service
+      - gateway-service:gateway-service
+      - kafka-server:kafka-server
+    environment:
+      PROFILE: dev
+      SERVER_PORT: 8802
+      DISCOVERY_SERVICE_URI: http://discovery-service:8761/eureka/
+      CONFIG_SERVICE_URI: http://config-service:8888
+      KAFKA_SERVER_URI: kafka-server
+      ZOOKEEPER_SERVER_URI: kafka-server
+      DISCOVERY_SERVICE_PORT:   8761
+      CONFIG_SERVICE_PORT:   8888
+      GATEWAY_SERVICE_PORT:     5555
+      KAFKA_SERVER_PORT:    2181
+
+  
+  gateway-service:
+    image: 732597826868.dkr.ecr.us-east-1.amazonaws.com/fairanb-v2-gateway:dev.v2.0
+    container_name: gateway-service
+    mem_limit: 1500m
+    ports:
+      - 5555:5555
+    links:
+      - discovery-service:discovery-service
+    environment:
+      PROFILE: dev
+      SERVER_PORT: 5555
+      DISCOVERY_SERVICE_URI: http://discovery-service:8761/eureka/
+      DISCOVERY_SERVICE_PORT:   8761
+
+  config-service:
+    image: 732597826868.dkr.ecr.us-east-1.amazonaws.com/fairanb-v2-config:dev.v2.0
+    container_name: config-service
+    mem_limit: 1500m
+    ports:
+      - 8888:8888
+    links:
+      - discovery-service:discovery-service
+    environment:
+      PROFILE: dev
+      SERVER_PORT: 8888
+      DISCOVERY_SERVICE_URI: http://discovery-service:8761/eureka/
+      DISCOVERY_SERVICE_PORT:   8761
+
+  discovery-service:
+    image: 732597826868.dkr.ecr.us-east-1.amazonaws.com/fairanb-v2-discovery:dev.v2.0
+    container_name: discovery-service
+    mem_limit: 1500m
+    ports:
+      - 8761:8761
+
+  kafka-server:
+    image: spotify/kafka
+    container_name: kafka-server
+    mem_limit: 1000m
+    ports:
+      - 2181:2181
+      - 9092:9092

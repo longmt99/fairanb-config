@@ -8,7 +8,7 @@ if [[ ("$#" -ne 2)  || ("$1" != dev && "$1" != qa && "$1" != stg && "$1" != loca
 fi
 
 # AWS_CONFIG
-export aws_account_id=73259782stst
+export aws_account_id=732597826868
 export aws_default_region=us-east-1
 
 export env_name=$1
@@ -33,5 +33,5 @@ docker push $aws_account_id.dkr.ecr.$aws_default_region.amazonaws.com/$repositor
 echo Build image completed on `date`
 
 
-###### docker run --name discovery-service -d -e spring.profiles.active=$env_name discovery-service
-###### docker commit discovery-service 73259782stst.dkr.ecr.us-east-1.amazonaws.com/fairanb-v2-discovery:dev.v2.0
+###### docker run --name merchant-service -d -e spring.profiles.active=$env_name fairanb-v2-merchant:dev.v2.0
+###### docker commit discovery-service 732597826868.dkr.ecr.us-east-1.amazonaws.com/fairanb-v2-discovery:dev.v2.0

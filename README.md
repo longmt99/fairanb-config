@@ -47,4 +47,12 @@ $ docker stats --
     6  sudo systemctl status mongod
     7  sudo systemctl enable mongod
     8  sudo ufw allow 27017
+    
+### Install Jenkin
+    9  sudo chmod 0777 /var/run/docker.sock    
+    Manage Jenkins -> Configure System -> Global Properties
+    export aws_account_id=73259782stst
+    export aws_default_region=us-east-1
+     $sudo -su jenkins
+     $aws configure
 	
